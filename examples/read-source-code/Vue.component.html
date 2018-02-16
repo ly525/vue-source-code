@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../../dist/vue.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+<div id="app">
+    <my-component @click.native="show"></my-component>
+</div>
+<script>
+  /**
+   * 这一步(Vue.component)：给 Vue 的全局属性 options 的 components 添加 当前的 组件的定义
+    Vue.options.components['my-component'] = Vue.extend({
+      name: 'my-component',
+      template: '<div>A custom component!</div>'
+    })
+
+   */
+  Vue.component('my-component', {
+    template: '<div>{{text}}</div>',
+    data: function () {
+      return {
+        text: 'I am a component with event, try click me!'
+      }
+    },
+
+
+  })
+  var vm = new Vue({
+    el: '#app',
+    methods: {
+      show: function () {
+        alert('something was clicked')
+      }
+    }
+  })
+
+
+
+  /**
+   * 自定义组件的解析  
+
+    (function() {
+      with(this){return _c('div',{attrs:{"id":"app"}},[_c('my-component')],1)}
+    })
+
+    vm.$mount('#app')
+
+    _c('el', obj, children)
+    _c('div', {
+     attrs: {
+       'id', 'app'
+     }
+    },
+    [
+     _c('my-component'),
+    ],
+     1
+
+    )
+   1. template 
+   => options.render 
+   => new Watcher(vm._update(v._render)) 
+   => _render 
+   => render 
+
+   2. _c 
+   => createElement 
+   => _createElement 
+   => createComponent 
+   => return vnode
+   */
+</script>
+
+</body>
+</html>

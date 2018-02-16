@@ -1,0 +1,12 @@
+no store 不会本地存储，针对本地会话有效
+no cache 浏览器关闭之后重新打开仍然存储
+function _(name, obj){
+var el = document.createElement(name)
+var attrs = obj.attrs
+attrs.forEach({key, val} => {
+
+el.setAttribute(key, val)
+
+})
+
+}
