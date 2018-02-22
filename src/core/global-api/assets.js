@@ -15,6 +15,7 @@ import { warn, isPlainObject } from '../util/index'
           ...
         }
     })
+ * 使用场景：下拉菜单、datepicker、tooltip 以及其它可能会出现弹出层(popover)的组件，需要实现：点击弹出层以外区域，关闭弹出层的功能。
  */
 export function initAssetRegisters (Vue: GlobalAPI) {
   /**
