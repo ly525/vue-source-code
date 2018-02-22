@@ -13,6 +13,34 @@ examples/read-source-code # 里面是用于理解源码的 demo
 > 1. 只用关注 src 目录即可，注释都写在源码中了
 > 2. 在 `examples/read-source-code` 中可以自己写一些 demo，来 debug 源码
 
+### vue-cli 生成的 main.js 分析
+```javascript
+// vue init webpack
+
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+// 以 element-ui 为例
+import ElementUI from 'element'
+
+Vue.use(ElementUI)
+
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
+
+```
+
+1. Vue.use => 「`src/core/global-api/use.js`」
+2. 
+
+
 ### Demo
 ```html
 <div id="app">
