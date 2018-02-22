@@ -37,8 +37,8 @@ new Vue({
 
 ```
 
-1. Vue.use => 「`src/core/global-api/use.js`」
-2. 
+1. [x] Vue.use => 「`src/core/global-api/use.js`」
+
 
 
 ### Demo
