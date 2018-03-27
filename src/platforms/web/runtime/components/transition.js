@@ -1,5 +1,7 @@
 /* @flow */
-
+/** 直接看最下面的 export default 
+  * 参考文章：https://my.oschina.net/u/3095416/blog/1305324
+*/
 // Provides transition support for a single element/component.
 // supports transition mode (out-in / in-out)
 

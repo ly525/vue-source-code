@@ -34,12 +34,20 @@ Vue.config.isReservedAttr = isReservedAttr
 Vue.config.getTagNamespace = getTagNamespace
 Vue.config.isUnknownElement = isUnknownElement
 
-// 安装平台特定的utils
-// install platform runtime directives & components
+/** 
+  * 安装平台特定的utils, 官方的指令、组件大部分都在这
+  * directives和components 是保存在 Vue.options 里面的
+  * install platform runtime directives & components
+*/
 extend(Vue.options.directives, platformDirectives) // v-model, v-show
 extend(Vue.options.components, platformComponents) // KeepAlive, Transition, TransitionGroup
 
 // install platform patch function
+/**
+  * 因为transtion并不单单是以一个组件来实现的，它需要操作真实 DOM（未插入文档流）和 virtual dom。
+  * 因此需要在Vue构造函数上打一些patch
+  * 过渡动画效果相关的 patch 的源码位置： src/platforms/web/runtime/modules/transition.js
+*/
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method

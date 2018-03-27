@@ -144,14 +144,30 @@ export function enter (vnode: VNodeWithData, toggleDisplay: ?() => void) {
   }
 
   // start enter transition
+  // el 为真实 dom 节点
   beforeEnterHook && beforeEnterHook(el)
   if (expectsCSS) {
+    // 给 el 添加 startClass「v-enter」 和 activeClass「v-enter-active」
+    // 此时 dom 节点还未插入到 document（文档流） 中，也就是在 mounted 钩子之前执行的
     addTransitionClass(el, startClass)
     addTransitionClass(el, activeClass)
+    /** nextFrame 实现：如果 requestAnimationFrame 不存在则使用 setTimeout
+      const raf = inBrowser && window.requestAnimationFrame
+        ? window.requestAnimationFrame.bind(window)
+        : setTimeout
+
+      export function nextFrame (fn: Function) {
+        raf(() => {
+          raf(fn)
+        })
+      }
+    */
     nextFrame(() => {
+      // 正如官方文档中所说的在下一帧添加了 toClass「v-enter-to」
       addTransitionClass(el, toClass)
-      removeTransitionClass(el, startClass)
+      removeTransitionClass(el, startClass) // remove「v-enter」
       if (!cb.cancelled && !userWantsControl) {
+        // 过渡效果结束之后，移除掉所有过渡相关的 class <执行 cb>
         if (isValidDuration(explicitEnterDuration)) {
           setTimeout(cb, explicitEnterDuration)
         } else {
@@ -171,6 +187,11 @@ export function enter (vnode: VNodeWithData, toggleDisplay: ?() => void) {
   }
 }
 
+/**
+  * <!----> 为vue的占位符，当元素通过 v-if 隐藏后，会在原来位置留下占位符
+  * 当 leave 方法被触发时，原本的真实 dom 元素已经隐藏掉了(从 vnode 中被移除)，而正在显示的元素，只是一个真实 dom 的副本
+  * @rm 由生命周期 remove 传入，作用：将 dom 元素的副本移出 document 文档流
+*/
 export function leave (vnode: VNodeWithData, rm: Function) {
   const el: any = vnode.elm
 
@@ -325,6 +346,10 @@ function _enter (_: any, vnode: VNodeWithData) {
   }
 }
 
+
+// create 和 activate 直接运行 enter
+// remove 直接运行 remove
+// enter 和 remove 执行之前，真实 dom 节点已经创建，并且挂载到 vnode.elm 上
 export default inBrowser ? {
   create: _enter,
   activate: _enter,
