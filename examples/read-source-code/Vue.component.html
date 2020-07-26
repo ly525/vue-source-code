@@ -22,12 +22,21 @@
 
    */
   Vue.component('my-component', {
-    template: '<div>{{text}}</div>',
+    template: `<div>
+      {{text}}
+      <span v-if="show()">h1滴滴答答滴滴答答滴滴答答滴滴答答的</span>
+    </div>`,
     data: function () {
       return {
-        text: 'I am a component with event, try click me!'
+        text: 'I am a component with event, try click me!',
+        private: false
       }
     },
+    methods: {
+      show() {
+        return this.private === true
+      }
+    }
 
 
   })
