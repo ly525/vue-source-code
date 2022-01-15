@@ -122,7 +122,7 @@
     "rollup-watch": "^4.0.0",
     "selenium-server": "^2.53.1",
     "serialize-javascript": "^2.1.1",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.5",
     "typescript": "^2.6.1",
     "uglify-js": "^3.0.15",
     "webpack": "^2.6.1",
